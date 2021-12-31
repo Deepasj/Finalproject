@@ -5,7 +5,18 @@ orbs:
   aws-eks: circleci/aws-eks@2.1.0
   aws-ecr: circleci/aws-ecr@7.3.0
   kubernetes: circleci/kubernetes@1.0
-  
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:13.8.0
+  python:
+    docker:
+      - image: python:3.9.0-alpine
+  aws:
+    docker:
+      - image: amazon/aws-cli
+      
 jobs:
     run-lint:
       docker:
