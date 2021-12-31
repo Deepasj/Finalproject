@@ -6,13 +6,16 @@ orbs:
   aws-ecr: circleci/aws-ecr@7.0.0
   kubernetes: circleci/kubernetes@0.12.0
 
-#executors:
+executors:
 #  node:
 #    docker:
 #      - image: circleci/node:13.8.0
-#  python:
-#    docker:
-#      - image: python:3.9.0-alpine
+  python:
+    docker:
+      - image: 'circleci/python:<<parameters.tag>>'
+    parameters:
+      tag:
+        default: latest
 #  aws:
 #    docker:
 #      - image: amazon/aws-cli
