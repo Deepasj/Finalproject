@@ -12,10 +12,7 @@ executors:
 #      - image: circleci/node:13.8.0
   python:
     docker:
-      - image: 'circleci/python:<<parameters.tag>>'
-    parameters:
-      tag:
-        default: latest
+      - image: circleci/python3
 #  aws:
 #    docker:
 #      - image: amazon/aws-cli
