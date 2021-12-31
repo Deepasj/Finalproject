@@ -145,7 +145,7 @@ workflows:
           name: build-and-push-image-ecr
           account-url: AWS_ECR_ACCOUNT_URL
           region: AWS_DEFAULT_REGION
-          repo: eks_orb_capstone_project
+          repo: deepasj-capstone
           tag: ${CIRCLE_SHA1}
           #dockerfile: ~/project/Dockerfile
           #path: ~/project/
