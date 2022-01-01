@@ -41,7 +41,7 @@ jobs:
               sudo mv /tmp/eksctl /usr/local/bin
               echo
               command -v eksctl
-              if ! command -v eksctl >/dev/null 2>&1; then
+              if command -v eksctl >/dev/null 2>&1; then
                 echo "AWS eksctl CLI installed"
               fi
               
