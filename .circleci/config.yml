@@ -39,6 +39,8 @@ jobs:
               curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" | tar xz -C .
               sudo chmod +x ./eksctl
               sudo mv ./eksctl /usr/local/bin
+              echo command -v eksctl
+              echo "AWS eksctl CLI installed"
               
     build-docker-image:
       docker:
