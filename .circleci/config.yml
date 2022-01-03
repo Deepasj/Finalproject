@@ -68,7 +68,7 @@ jobs:
               export TAG=v${CIRCLE_BUILD_NUM}
               export IMAGE_NAME=capstone
               docker build -t deepasj/$IMAGE_NAME:$TAG .
-              docker login -u deepasj -p !thala@1984 
+              docker login -u deepasj -p @ghgt!79878 
               docker push deepasj/$IMAGE_NAME:$TAG
           
     deploy-application:
@@ -222,48 +222,43 @@ jobs:
             ssh-access: false
             ssh-public-key: ''
 
-workflows:
+#workflows:
   default:
     jobs:
+      - run-lint
+      - build-docker-image
+      - push-docker-image:
+          requires:
+            - "build-docker-image"
+      - aws-ecr/build-and-push-image:
+          name: build-and-push-image-ecr
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_DEFAULT_REGION
+          repo: deepasj-capstone
+          tag: ${CIRCLE_SHA1}
+      - create-cluster:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          requires:
+            - build-and-push-image-ecr
+      - deploy-application:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          aws-region: $AWS_DEFAULT_REGION
+          docker-image-name: "${AWS_ECR_ACCOUNT_URL}/deepasj-capstone:${CIRCLE_SHA1}"
+          version-info: "${CIRCLE_SHA1}"
+          requires:
+            - create-cluster
+      - test-application:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          aws-region: $AWS_DEFAULT_REGION
+          expected-version-info: "${CIRCLE_SHA1}"
+          requires:
+            - deploy-application
+      - undeploy-application:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          aws-region: $AWS_DEFAULT_REGION
+          requires:
+            - test-application
       - delete-cluster:
-          cluster-name: eks-orb-capstone-project-deployment-1553f7d
-#      - run-lint
-#      - build-docker-image
-#      - push-docker-image:
-#          requires:
-#            - "build-docker-image"
-#      - aws-ecr/build-and-push-image:
-#          name: build-and-push-image-ecr
-#          account-url: AWS_ECR_ACCOUNT_URL
-#          region: AWS_DEFAULT_REGION
-#          repo: deepasj-capstone
-#          tag: ${CIRCLE_SHA1}
-#      - create-cluster:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          requires:
-#            - build-and-push-image-ecr
-#      - deploy-application:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          aws-region: $AWS_DEFAULT_REGION
-#          docker-image-name: "${AWS_ECR_ACCOUNT_URL}/deepasj-capstone:${CIRCLE_SHA1}"
-#          version-info: "${CIRCLE_SHA1}"
-#          requires:
-#            - create-cluster
-#      - test-application:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          aws-region: $AWS_DEFAULT_REGION
-#          expected-version-info: "${CIRCLE_SHA1}"
-#          requires:
-#            - deploy-application
-#      - undeploy-application:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          aws-region: $AWS_DEFAULT_REGION
-#          requires:
-#            - test-application
-#      - delete-cluster:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          executor: python
-#          aws-region: $AWS_DEFAULT_REGION
-#          wait: true
-#          requires:
-#            - undeploy-application
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          requires:
+            - undeploy-application
