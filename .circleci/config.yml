@@ -222,7 +222,7 @@ jobs:
             ssh-access: false
             ssh-public-key: ''
 
-#workflows:
+workflows:
   default:
     jobs:
       - run-lint
