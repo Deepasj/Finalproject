@@ -249,7 +249,7 @@ workflows:
             - build-and-push-image-ecr
       - aws-eks/update-container-image:
           cluster-name: eks-orb-capstone-project-deployment-dad2e88
-          container-image-updates: 'deepasj-capstone=deepasj-capstone:latest'
+          container-image-updates: 'app=app:latest'
           record: true
           requires:
             - deploy-application
