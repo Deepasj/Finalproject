@@ -246,7 +246,7 @@ workflows:
           docker-image-name: "${AWS_ECR_ACCOUNT_URL}/deepasj-capstone:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - aws-ecr/build-and-push-image
+            - build-and-push-image-ecr
 #      - test-application:
 #          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
 #          aws-region: $AWS_DEFAULT_REGION
