@@ -238,30 +238,30 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: deepasj-capstone
           tag: ${CIRCLE_SHA1}
-#      - create-cluster:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          requires:
-#            - build-and-push-image-ecr
+      - create-cluster:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          requires:
+            - build-and-push-image-ecr
       - deploy-application:
-          cluster-name: eks-orb-capstone-project-deployment-dad2e88
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_ACCOUNT_URL}/deepasj-capstone:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - build-and-push-image-ecr
+            - create-cluster
       - aws-eks/update-container-image:
-          cluster-name: eks-orb-capstone-project-deployment-dad2e88
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
           container-image-updates: 'app=app:latest'
           record: true
           requires:
             - deploy-application
           resource-name: deployment/capstone
-#      - test-application:
-#          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-#          aws-region: $AWS_DEFAULT_REGION
-#          expected-version-info: "${CIRCLE_SHA1}"
-#          requires:
-#            - deploy-application
+      - test-application:
+          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
+          aws-region: $AWS_DEFAULT_REGION
+          expected-version-info: "${CIRCLE_SHA1}"
+          requires:
+            - deploy-application
 #      - undeploy-application:
 #          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
 #          aws-region: $AWS_DEFAULT_REGION
