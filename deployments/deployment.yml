@@ -20,7 +20,7 @@ spec:
         app: capstone
     spec:
       containers:
-      - name: app
+      - name: capstone
         image: deepasj/capstone
         imagePullPolicy: Always
         resources:
