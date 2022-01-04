@@ -247,6 +247,13 @@ workflows:
           version-info: "${CIRCLE_SHA1}"
           requires:
             - build-and-push-image-ecr
+      - aws-eks/update-container-image:
+          cluster-name: eks-orb-capstone-project-deployment-dad2e88
+          container-image-updates: 'capstone=capstone:latest'
+          record: true
+          requires:
+            - deploy-application
+          resource-name: deployment/capstone
 #      - test-application:
 #          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
 #          aws-region: $AWS_DEFAULT_REGION
