@@ -5,10 +5,11 @@ metadata:
   labels:
     app: capstone
 spec:
+  progressDeadlineSeconds: 900
   selector:
     matchLabels:
       app: capstone
-  replicas: 1
+  replicas: 0
   strategy:
     type: RollingUpdate
     rollingUpdate:
