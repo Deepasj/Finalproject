@@ -251,7 +251,7 @@ workflows:
             - create-cluster
       - aws-eks/update-container-image:
           cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
-          container-image-updates: 'app=app:latest'
+          container-image-updates: 'capstone=capstone:latest'
           record: true
           requires:
             - deploy-application
