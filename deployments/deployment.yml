@@ -22,6 +22,7 @@ spec:
       containers:
       - name: app
         image: deepasj/capstone
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
