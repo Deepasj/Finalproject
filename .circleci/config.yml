@@ -98,8 +98,6 @@ jobs:
             install-kubectl: true
             aws-region: << parameters.aws-region >>
         - kubernetes/create-or-update-resource:
-            get-rollout-status: true
-            watch-timeout: '20m'
             resource-file-path: "deployments/deployment.yml"
             resource-name: deployment/capstone
 
