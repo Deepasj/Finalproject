@@ -131,7 +131,7 @@ jobs:
           - run:
               name: Check Roll out status
               command: |                
-                kubectl rollout status deployment deployment/capstone
+                kubectl rollout status deployment/capstone
     
     undeploy-application:
       executor: aws-eks/python3
