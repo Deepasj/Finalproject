@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: capstone
-  replicas: 0
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,6 +19,7 @@ spec:
     metadata:
       labels:
         app: capstone
+        role: rolling-update
     spec:
       containers:
       - name: capstone
