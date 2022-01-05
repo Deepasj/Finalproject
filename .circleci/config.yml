@@ -258,12 +258,12 @@ workflows:
 #          requires:
 #            - deploy-application
 #          resource-name: deployment/capstone
-      - test-application:
-          cluster-name: eks-orb-capstone-project-deployment-b046ada
-          aws-region: $AWS_DEFAULT_REGION
-          expected-version-info: "b8369c855f81f02a88ef27662c6d9b048bebe5c8"
-          requires:
-            - deploy-application
+#      - test-application:
+#          cluster-name: eks-orb-capstone-project-deployment-b046ada
+#          aws-region: $AWS_DEFAULT_REGION
+#          expected-version-info: "b8369c855f81f02a88ef27662c6d9b048bebe5c8"
+#          requires:
+#            - deploy-application
 #      - undeploy-application: 
 #          cluster-name: eks-orb-capstone-project-deployment-${CIRCLE_WORKFLOW_ID:0:7}
 #          aws-region: $AWS_DEFAULT_REGION
