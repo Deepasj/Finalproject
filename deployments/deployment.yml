@@ -8,12 +8,7 @@ spec:
   selector:
     matchLabels:
       app: capstone
-  replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -22,7 +17,6 @@ spec:
       containers:
       - name: capstone
         image: deepasj/capstone
-        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
